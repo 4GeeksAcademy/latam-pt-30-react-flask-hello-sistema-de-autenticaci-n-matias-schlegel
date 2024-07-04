@@ -46,6 +46,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			signup: async (email, password) => {
+				try {
+					
+					const response = await fetch(process.env.BACKEND_URL + "/api/signup", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({ email, password }),
+					})
+					if (response.ok) {
+						return true
+					} else {
+						console.error("Failed to sign up")
+						return false
+					  }
+
+				} catch (error) {
+					console.log("Error during sign up", error)
+				  }
 			}
 		}
 	};

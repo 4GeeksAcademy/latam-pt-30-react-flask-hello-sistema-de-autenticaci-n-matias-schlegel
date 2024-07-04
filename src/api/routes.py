@@ -20,3 +20,23 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+@api.route('/singup', methods=['POST'])
+def create_user():
+    data = request.json
+    email = data.get('email')
+    password = data.get('password')
+
+    if not email or not password:
+        return jsonify({"message": "email and password are required"}), 400
+    
+    new_user = User(email=email, password=password)
+    try:
+        db.session.add(new_user)
+        db.session.commit()
+    except Exception as error:
+        print(error)
+        db.session.rollback()
+        return jsonify({"message": "DB error"})
+    
+    return jsonify ({"message":"User registered succesfully"}), 200
