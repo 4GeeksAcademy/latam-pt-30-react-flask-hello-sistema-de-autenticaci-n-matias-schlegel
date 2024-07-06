@@ -3,30 +3,30 @@ import { useContext } from "react"
 import { Context } from "../store/appContext"
 import { useNavigate } from "react-router-dom"
 
-export const Signup = () => {
+export const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
-    const {store, actions} = useContext(Context)
+    const { actions } = useContext(Context)
     const navigate = useNavigate()
+
 
     const handleSubmit = async (event) => {
         event.preventDefault() // envia una petición HTTP y recargar la página.
-        const success = await actions.signup(email, password)
+        const success = await actions.login(email, password)
         if (success) {
-            navigate("/login") //todavia no hice la parte del login
+            navigate("/private") //todavia no hice la parte del private
         } else {
-            console.error("Failed to sign up")
+            console.error("Failed to log in")
         }
     }
     
-    
     return (
         <React.Fragment>
-        <div className="containerSignup">
-            <div className="h2Signup">
-                <h2>SIGN UP</h2>
+        <div className="containerLogin">
+            <div className="h2Login">
+                <h2> LOGIN </h2>
             </div>
-            <form className="formSignup" onSubmit={handleSubmit}>
+            <form className="formLogin" onSubmit={handleSubmit}>
                 <div className="col-12 row">
                     <div>
                         <label>Email:</label>
@@ -46,8 +46,8 @@ export const Signup = () => {
                         />
                     </div>
                 </div>
-                <div className="buttonSignup">
-                    <button type="submit">Sign Up</button>
+                <div className="buttonLogin">
+                    <button type="submit"> Login </button>
                 </div>
             </form>    
         </div>   
