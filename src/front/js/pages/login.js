@@ -14,7 +14,7 @@ export const Login = () => {
         event.preventDefault() // envia una petición HTTP y recargar la página.
         const success = await actions.login(email, password)
         if (success) {
-            navigate("/private") //todavia no hice la parte del private
+            navigate("/private")
         } else {
             console.error("Failed to log in")
         }

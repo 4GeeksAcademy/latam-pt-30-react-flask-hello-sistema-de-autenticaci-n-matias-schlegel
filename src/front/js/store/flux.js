@@ -59,7 +59,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify({ email, password }),
 					})
 					if (response.ok) {
-						return true //fijarse bien como funciona
+						return true
 					} else {
 						console.error("Failed to sign up")
 						return false

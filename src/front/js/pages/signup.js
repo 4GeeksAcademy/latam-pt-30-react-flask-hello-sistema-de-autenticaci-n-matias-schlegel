@@ -13,7 +13,7 @@ export const Signup = () => {
         event.preventDefault() // envia una petición HTTP y recargar la página.
         const success = await actions.signup(email, password)
         if (success) {
-            navigate("/login") //todavia no hice la parte del login
+            navigate("/login")
         } else {
             console.error("Failed to sign up")
         }
