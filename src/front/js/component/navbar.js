@@ -9,9 +9,9 @@ export const Navbar = () => {
 				<Link to="/signup">
 					<span className="navbar-brand mb-0 h1">Register</span>
 				</Link>
-					<div className="ml-auto">
-						<Link to="/login">Login</Link>
-					</div>
+				<Link to="/login">
+					<span className="navbar-brand mb-0 h1">Login</span>
+				</Link>
 			</div>
 		</nav>
 	);
