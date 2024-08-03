@@ -25,6 +25,17 @@ export const Private = () => {
                     <p>This page is only accessible to authenticated users.</p>
                 </div>
             </div>
+            <div>
+                <h6>User information</h6>
+                    {store.user ? (
+                    <>
+                        <p>Email: {store.user.email}</p>
+                        <p>User ID: {store.user.id}</p>
+                    </>
+                ) : (
+                    <p>Loading user information...</p>
+                )}
+            </div>
             <div className="buttonPrivate col-11">
                 <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
             </div>

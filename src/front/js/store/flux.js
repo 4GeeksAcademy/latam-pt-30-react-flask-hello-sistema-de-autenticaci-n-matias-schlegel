@@ -1,8 +1,9 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			token: null,
+			token: sessionStorage.getItem("token") || null,
 			message: null,
+			user: JSON.parse(sessionStorage.getItem("user")) || null,
 			demo: [
 				{
 					title: "FIRST",
@@ -56,14 +57,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: {
 							"Content-Type": "application/json",
 						},
-						body: JSON.stringify({ email, password }),
+						body: JSON.stringify({ email: email, password: password }),
 					})
-					if (response.ok) {
-						return true
-					} else {
+					if (!response.ok) {
 						console.error("Failed to sign up")
 						return false
 					  }
+
+					  const data = await response.json();
+					  setStore({ user: data.user });
+					  return true;
 
 				} catch (error) {
 					console.log("Error during sign up", error)
@@ -72,23 +75,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 			login: async (email, password) => {
 				try {
 					const response = await fetch(process.env.BACKEND_URL + "/api/login", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({ email, password })
-                    });
-
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({ email, password })
+					});
+			
 					if (response.status !== 201) {
-						console.error("There has been some error"); 
-						//se utiliza para imprimir mensajes de error en la consola del navegador o en el entorno de ejecución
-                        return false;
+						console.error("There has been some error");
+						return false;
 					}
-
-					const data = response.json()
+			
+					const data = await response.json();
 					sessionStorage.setItem("token", data.token);
-                    setStore({ token: data.token });
-                    return true;
+					sessionStorage.setItem("user", JSON.stringify(data.user));
+					setStore({ ...getStore(), token: data.token, user: data.user });
+					return true;
 
 					// sessionStorage =
 					// proporciona un área de almacenamiento accesible solo desde la misma ventana o pestaña del navegador... 
